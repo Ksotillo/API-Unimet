@@ -25,7 +25,40 @@ function getCompanyByID(req, res) {
         .catch(error => res.status(500).json(error));
 }
 
+function getCompaniesIntershipOfferAllowed(req, res) {
+    const { knex } = req.app.locals;
+    knex
+        .select('nombre', 'rif', 'descripcion', 'numero_empleados' ,'url', 'telefono', 'email')
+        .from('empresa')
+        .where( { oferta_pasantias: 1 } )
+        .then(data => res.status(200).json(data))
+        .catch(error => res.status(500).json(error));
+}
+
+function getCompaniesThesisOfferAllowed(req, res) {
+    const { knex } = req.app.locals;
+    knex
+        .select('nombre', 'rif', 'descripcion', 'numero_empleados' ,'url', 'telefono', 'email')
+        .from('empresa')
+        .where( { oferta_trabajos: 1 } )
+        .then(data => res.status(200).json(data))
+        .catch(error => res.status(500).json(error));
+}
+
+function getCompaniesWorkOfferAllowed(req, res) {
+    const { knex } = req.app.locals;
+    knex
+        .select('nombre', 'rif', 'descripcion', 'numero_empleados' ,'url', 'telefono', 'email')
+        .from('empresa')
+        .where( { oferta_tesis: 1 } )
+        .then(data => res.status(200).json(data))
+        .catch(error => res.status(500).json(error));
+}
+
 module.exports = {
     getAllCompanies,
     getCompanyByID,
+    getCompaniesIntershipOfferAllowed,
+    getCompaniesThesisOfferAllowed,
+    getCompaniesWorkOfferAllowed
 }

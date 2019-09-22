@@ -18,6 +18,15 @@ router.get('/graduates/:id', middlewares.getIDAsInteger, routes.graduates.getGra
 router.get('/companies', routes.companies.getAllCompanies);
 router.get('/companies/:id', middlewares.getIDAsInteger, routes.companies.getCompanyByID);
 
+
+
+router.get('/diplomas', routes.diplomas.getAllDiplomas);
+router.get('/diplomas/student/:id', routes.diplomas.getDiplomasByStudent);
+router.get('/companies/intership_offer', routes.companies.getCompaniesIntershipOfferAllowed);
+router.get('/companies/thesis_offer', routes.companies.getCompaniesThesisOfferAllowed);
+router.get('/companies/work_offer', routes.companies.getCompaniesWorkOfferAllowed);
+
+
 app.use('/api', router);
 
 app.listen(settings.APIServerPort, () => console.log(`🔥Server is listening on ${settings.APIServerPort}`));
