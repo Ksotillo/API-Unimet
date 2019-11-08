@@ -1,3 +1,4 @@
+
 function getAllStudents(req, res) {
     const { knex } = req.app.locals;
     knex
@@ -40,7 +41,43 @@ function getStudentByID(req, res) {
     }
 }
 
+function getStudentsByCareer(req, res) {
+    const { knex } = req.app.locals;
+    const { career } = req.params;
+
+    knex
+        .distinct()
+        .select('e.nombre', 'e.apellido', 'e.cedula', 'e.numero_carnet' ,'e.fecha_nacimiento', 'e.nacionalidad', 'e.email', 'c.nombre as ' +  'carrera')
+        .from('estudiante AS e')
+        .innerJoin('carrera_detalle AS cd', 'cd.numero_carnet', 'e.numero_carnet')
+        .innerJoin('carrera AS c', 'c.id', 'cd.carrera_id')
+        .where('c.deleted', '=', 0)
+        // .where('c.nombre', '=', 0)
+        .then(data => {
+            data = data.filter( d => d.carrera.replace(/\s/g, '').toLowerCase() == career.toLowerCase());
+            if (data.length > 0) {
+                res.status(200).json(data);
+            } else {
+                knex
+                    .select('id', 'nombre')
+                    .from('carrera')
+                    .where( { deleted: 0 } )
+                    .then(data => {
+                        const careers = data
+                        let options = '';
+                        for (let i = 0; i < careers.length; i++) {
+                            options += careers[i].nombre + "\n";
+                        }
+                        res.status(404).json(`No se ha enccontrado resultados para ${career}. Puedes intentar las siguiente opciones: \n ${options}`);
+                    })
+                    .catch(error => res.status(500).json(error));
+            }
+        })
+        .catch(error => res.status(500).json(error));
+}
+
 module.exports = {
     getAllStudents,
     getStudentByID,
+    getStudentsByCareer
 }

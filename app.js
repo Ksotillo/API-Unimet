@@ -13,10 +13,12 @@ app.locals.knex = knex;
 
 router.get('/students', routes.students.getAllStudents);
 router.get('/students/:id', middlewares.getIDAsInteger, routes.students.getStudentByID);
+router.get('/studentsByCareer/:career', routes.students.getStudentsByCareer);
 router.get('/graduates', routes.graduates.getAllGraduates);
 router.get('/graduates/:id', middlewares.getIDAsInteger, routes.graduates.getGraduateByID);
 router.get('/companies', routes.companies.getAllCompanies);
 router.get('/companies/:id', middlewares.getIDAsInteger, routes.companies.getCompanyByID);
+router.get('/careers', routes.careers.getAllCareers);
 
 app.use('/api', router);
 
