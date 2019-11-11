@@ -1,4 +1,14 @@
-API Unimet
+# API Unimet
+
+# Configuración inicial
+
+Para que el codigo del API funcione correctamente debe de crearse un archivo .env que contenga los siguientes datos:
+
+* DB_HOST = <host_de_la_base_de_datos>
+* DB_PORT = <puerto_de_la_base_de_datos>
+* DB_USER = <usuario_de_la_base_de_datos>
+* DB_PASSWORD = <contraseña_de_la_base_de_datos>
+* DB = <nombre_de_la_base_de_datos>
 
 # Bienvenido a la documentación de API-Unimet!
 
